@@ -1,49 +1,71 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { CandidatoModel } from '../../models/candidatos.model';
+import { Subscription } from 'rxjs';
+import { CandidatoService } from '../../services/candidato.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-candidato-form',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './candidato-form.component.html',
-  styleUrl: './candidato-form.component.css',
+  styleUrls: ['./candidato-form.component.css'],
+  standalone: true,
+  imports: [MatIconModule, MatTableModule, HttpClientModule, CommonModule],
 })
 export class CandidatoFormComponent {
-  public candidatos = [
-    {
-      name: 'Thomas Hardy',
-      email: 'thomashardy@mail.com',
-      address: '89 Chiaroscuro Rd, Portland, USA',
-      phone: '(171) 555-2222',
-      actions: ['', ''],
-    },
-    {
-      name: 'Dominique Perrier',
-      email: 'dominiqueperrier@mail.com',
-      address: 'Obere Str. 57, Berlin, Germany',
-      phone: '(313) 555-5735',
-      actions: ['', ''],
-    },
-    {
-      name: 'Maria Anders',
-      email: 'mariaanders@mail.com',
-      address: '25, rue Lauriston, Paris, France',
-      phone: '(503) 555-9931',
-      actions: ['', ''],
-    },
-    {
-      name: 'Fran Wilson',
-      email: 'franwilson@mail.com',
-      address: 'C/ Araquil, 67, Madrid, Spain',
-      phone: '(204) 619-5731',
-      actions: ['', ''],
-    },
-    {
-      name: 'Martin Blank',
-      email: 'martinblank@mail.com',
-      address: 'Via Monte Bianco 34, Turin, Italy',
-      phone: '(480) 631-2097',
-      actions: ['', ''],
-    },
-  ];
+  private subscription: Subscription = new Subscription();
+
+  public candidatos: CandidatoModel[] = [];
+
+  constructor(
+    private dialog: MatDialog,
+    private candidatoService: CandidatoService
+  ) {}
+
+  ngOnInit(): void {
+    this.inicializarDados();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private inicializarDados() {
+    this.obterListaCandidatos();
+  }
+
+  private obterListaCandidatos() {
+    this.subscription = this.candidatoService.obterListaCandidatos().subscribe({
+      next: (response) => {
+        let success = response.success as boolean;
+        if (response) {
+          this.candidatos = response;
+          console.log('Lista de candidatos:', this.candidatos);
+        } else {
+          console.warn('Requisição bem-sucedida, mas response.success é falso');
+        }
+      },
+      error: (error) => {
+        console.error('Erro ao buscar candidatos:', error);
+      },
+      complete: () => {
+        console.log('Requisição de candidatos completa');
+      },
+    });
+  }
+
+  openModalView(candidato: CandidatoModel) {
+    // this.dialog.open(CandidatoVisualizarComponent, { data: candidato });
+  }
+
+  openModalEdit(candidato: CandidatoModel) {
+    // this.dialog.open(CandidatoEditarComponent, { data: candidato });
+  }
+
+  openModalCadastrar() {
+    // this.dialog.open(CandidatoCadastrarComponent);
+  }
 }

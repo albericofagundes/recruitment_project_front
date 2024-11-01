@@ -1,1 +1,98 @@
-<p>candidato-cadastro works!</p>
+<div class="table-wrapper">
+  <div class="table-title">
+    <h2>Candidate Registration</h2>
+  </div>
+  <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="fullName" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phone" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>LinkedIn Profile</mat-label>
+      <input matInput formControlName="linkedin">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>GitHub Profile</mat-label>
+      <input matInput formControlName="github">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Address</mat-label>
+      <textarea matInput formControlName="address" required></textarea>
+    </mat-form-field>
+
+    <div formArrayName="experience">
+      <h3>Professional Experience</h3>
+      <div *ngFor="let experience of candidateForm.controls.experience.controls; let i = index" [formGroupName]="i">
+        <mat-form-field class="full-width">
+          <mat-label>Job Title</mat-label>
+          <input matInput formControlName="jobTitle" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Company</mat-label>
+          <input matInput formControlName="company" required>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Start Date</mat-label>
+          <input matInput formControlName="startDate" type="date" required>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>End Date</mat-label>
+          <input matInput formControlName="endDate" type="date">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formArrayName="education">
+      <h3>Education</h3>
+      <div *ngFor="let education of candidateForm.controls.education.controls; let i = index" [formGroupName]="i">
+        <mat-form-field class="full-width">
+          <mat-label>Degree</mat-label>
+          <input matInput formControlName="degree" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Institution</mat-label>
+          <input matInput formControlName="institution" required>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Graduation Year</mat-label>
+          <input matInput formControlName="graduationYear" type="number" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-form-field class="full-width">
+      <mat-label>Skills (Comma separated)</mat-label>
+      <input matInput formControlName="skills">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Languages (Comma separated)</mat-label>
+      <input matInput formControlName="languages">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Cover Letter</mat-label>
+      <textarea matInput formControlName="coverLetter" maxlength="500"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

@@ -1,1 +1,32 @@
-<p>candidato-visualizar works!</p>
+<mat-card>
+  <mat-card-title>{{ candidato?.fullName }}</mat-card-title>
+  <mat-card-subtitle>{{ candidato?.email }}</mat-card-subtitle>
+
+  <p><strong>Telefone:</strong> {{ candidato?.phone }}</p>
+  <p><strong>Endereço:</strong> {{ candidato?.address }}</p>
+  <p><strong>LinkedIn:</strong> <a [href]="candidato?.linkedin">{{ candidato?.linkedin }}</a></p>
+  <p><strong>GitHub:</strong> <a [href]="candidato?.github">{{ candidato?.github }}</a></p>
+
+  <h3>Experiência</h3>
+  <div *ngFor="let exp of candidato?.experience">
+    <p><strong>Cargo:</strong> {{ exp.jobTitle }}</p>
+    <p><strong>Empresa:</strong> {{ exp.company }}</p>
+    <p><strong>Período:</strong> {{ exp.startDate }} - {{ exp.endDate || 'Atualmente' }}</p>
+  </div>
+
+  <h3>Formação</h3>
+  <div *ngFor="let edu of candidato?.education">
+    <p><strong>Grau:</strong> {{ edu.degree }}</p>
+    <p><strong>Instituição:</strong> {{ edu.institution }}</p>
+    <p><strong>Ano de Conclusão:</strong> {{ edu.graduationYear }}</p>
+  </div>
+
+  <h3>Habilidades</h3>
+  <p>{{ candidato?.skills }}</p>
+
+  <h3>Idiomas</h3>
+  <p>{{ candidato?.languages }}</p>
+
+  <h3>Carta de Apresentação</h3>
+  <p>{{ candidato?.coverLetter }}</p>
+</mat-card>

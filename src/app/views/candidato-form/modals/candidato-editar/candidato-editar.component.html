@@ -1,1 +1,119 @@
-<p>candidato-editar works!</p>
+<div class="form-container">
+  <mat-card>
+    <mat-card-title>Editar Candidato</mat-card-title>
+    <form [formGroup]="candidatoForm" (ngSubmit)="onSubmit()">
+      <!-- Basic Info Fields -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nome Completo</mat-label>
+        <input matInput formControlName="fullName" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="phone" type="tel" required />
+      </mat-form-field>
+
+      <!-- Social Media Links -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>LinkedIn</mat-label>
+        <input matInput formControlName="linkedin" type="url" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>GitHub</mat-label>
+        <input matInput formControlName="github" type="url" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Endereço</mat-label>
+        <input matInput formControlName="address" required />
+      </mat-form-field>
+
+      <!-- Experience and Education Sections, looping through arrays -->
+      <div
+        formArrayName="experience"
+        *ngFor="let exp of experience.controls; let i = index"
+      >
+        <h4>Experiência {{ i + 1 }}</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>Cargo</mat-label>
+          <input matInput formControlName="jobTitle" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Empresa</mat-label>
+          <input matInput formControlName="company" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Data de Início</mat-label>
+          <input matInput formControlName="startDate" type="date" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Data de Término</mat-label>
+          <input matInput formControlName="endDate" type="date" />
+        </mat-form-field>
+      </div>
+
+      <div
+        formArrayName="education"
+        *ngFor="let edu of education.controls; let j = index"
+      >
+        <h4>Formação {{ j + 1 }}</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>Grau</mat-label>
+          <input matInput formControlName="degree" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Instituição</mat-label>
+          <input matInput formControlName="institution" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ano de Conclusão</mat-label>
+          <input
+            matInput
+            formControlName="graduationYear"
+            type="number"
+            required
+          />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Habilidades</mat-label>
+        <input matInput formControlName="skills" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Idiomas</mat-label>
+        <input matInput formControlName="languages" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Carta de Apresentação</mat-label>
+        <textarea
+          matInput
+          formControlName="coverLetter"
+          maxlength="500"
+        ></textarea>
+        <mat-hint align="end"
+          >{{
+            candidatoForm.get("coverLetter").value?.length || 0
+          }}/500</mat-hint
+        >
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="candidatoForm.invalid"
+      >
+        Atualizar
+      </button>
+    </form>
+  </mat-card>
+</div>
