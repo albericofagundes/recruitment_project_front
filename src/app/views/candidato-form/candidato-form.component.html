@@ -1,0 +1,511 @@
+<script>
+  $(document).ready(function () {
+    // Activate tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // Select/Deselect checkboxes
+    var checkbox = $('table tbody input[type="checkbox"]');
+    $("#selectAll").click(function () {
+      if (this.checked) {
+        checkbox.each(function () {
+          this.checked = true;
+        });
+      } else {
+        checkbox.each(function () {
+          this.checked = false;
+        });
+      }
+    });
+    checkbox.click(function () {
+      if (!this.checked) {
+        $("#selectAll").prop("checked", false);
+      }
+    });
+  });
+</script>
+
+<div class="container-xl">
+  <div class="table-responsive pt-5">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2><b>Candidatos</b></h2>
+          </div>
+          <div class="col-sm-6">
+            <!-- <a
+              href="#addEmployeeModal"
+              class="btn btn-success"
+              data-toggle="modal"
+              ><i class="material-icons">&#xE147;</i>
+              <span>Add New Employee</span></a
+            > -->
+            <a
+              href="#deleteEmployeeModal"
+              class="btn btn-danger"
+              data-toggle="modal"
+              ><i class="material-icons">&#xE15C;</i> <span>Delete</span></a
+            >
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>
+              <span class="custom-checkbox">
+                <input type="checkbox" id="selectAll" />
+                <label for="selectAll"></label>
+              </span>
+            </th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let candidato of candidatos">
+            <td>
+              <span class="custom-checkbox">
+                <input
+                  type="checkbox"
+                  id="checkbox1"
+                  name="options[]"
+                  value="1"
+                />
+                <label for="checkbox1"></label>
+              </span>
+            </td>
+            <td>{{ candidato.nome }}</td>
+            <td>{{ candidato.email }}</td>
+            <td>{{ candidato.telefone }}</td>
+            <td>
+              <a href="#editEmployeeModal" class="edit" data-toggle="modal"
+                ><i class="material-icons" data-toggle="tooltip" title="Edit"
+                  >&#xE254;</i
+                ></a
+              >
+              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"
+                ><i class="material-icons" data-toggle="tooltip" title="Delete"
+                  >&#xE872;</i
+                ></a
+              >
+            </td>
+          </tr>
+          <!-- More rows as needed -->
+        </tbody>
+      </table>
+      <!-- <div class="clearfix">
+        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+        <ul class="pagination">
+          <li class="page-item disabled"><a href="#">Prev</a></li>
+          <li class="page-item active"><a href="#">1</a></li>
+          <li class="page-item"><a href="#">2</a></li>
+          <li class="page-item"><a href="#">3</a></li>
+          <li class="page-item"><a href="#">Next</a></li>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div id="addEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h4 class="modal-title">Add Employee</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="nome" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" required />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" class="form-control" name="telefone" required />
+          </div>
+          <div class="form-group">
+            <label>Position</label>
+            <input type="text" class="form-control" name="cargo" required />
+          </div>
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              name="data_nascimento"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Street"
+              name="rua"
+              required
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Number"
+              name="numero"
+              required
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Complement"
+              name="complemento"
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="City"
+              name="cidade"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Marital Status</label>
+            <input
+              type="text"
+              class="form-control"
+              name="estado_civil"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Professional Experience</label>
+            <textarea
+              class="form-control"
+              name="experiencias_profissionais"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Academic Background</label>
+            <textarea
+              class="form-control"
+              name="formacoes_academicas"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Languages</label>
+            <input type="text" class="form-control" name="languages" />
+          </div>
+          <div class="form-group">
+            <label>Nationality</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nacionalidade"
+              value="brasileira"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Skills</label>
+            <textarea class="form-control" name="skills"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- View Employee Modal -->
+<div id="viewEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">View Employee</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name</label>
+          <p class="form-control-static">{{ employee.nome }}</p>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <p class="form-control-static">{{ employee.email }}</p>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <p class="form-control-static">{{ employee.telefone }}</p>
+        </div>
+        <div class="form-group">
+          <label>Position</label>
+          <p class="form-control-static">{{ employee.cargo }}</p>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <p class="form-control-static">{{ employee.data_nascimento | date:'yyyy-MM-dd' }}</p>
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <p class="form-control-static">{{ employee.rua }}, {{ employee.numero }} - {{ employee.complemento }}, {{ employee.cidade }}</p>
+        </div>
+        <div class="form-group">
+          <label>Marital Status</label>
+          <p class="form-control-static">{{ employee.estado_civil }}</p>
+        </div>
+        <div class="form-group">
+          <label>Professional Experience</label>
+          <p class="form-control-static">{{ employee.experiencias_profissionais }}</p>
+        </div>
+        <div class="form-group">
+          <label>Academic Background</label>
+          <p class="form-control-static">{{ employee.formacoes_academicas }}</p>
+        </div>
+        <div class="form-group">
+          <label>Languages</label>
+          <p class="form-control-static">{{ employee.languages }}</p>
+        </div>
+        <div class="form-group">
+          <label>Nationality</label>
+          <p class="form-control-static">{{ employee.nacionalidade }}</p>
+        </div>
+        <div class="form-group">
+          <label>Skills</label>
+          <p class="form-control-static">{{ employee.skills }}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Edit Employee Modal -->
+<div id="editEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Employee</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="nome" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" required />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" class="form-control" name="telefone" required />
+          </div>
+          <div class="form-group">
+            <label>Position</label>
+            <input type="text" class="form-control" name="cargo" required />
+          </div>
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              name="data_nascimento"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Street"
+              name="rua"
+              required
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Number"
+              name="numero"
+              required
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Complement"
+              name="complemento"
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="City"
+              name="cidade"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Marital Status</label>
+            <input
+              type="text"
+              class="form-control"
+              name="estado_civil"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Professional Experience</label>
+            <textarea
+              class="form-control"
+              name="experiencias_profissionais"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Academic Background</label>
+            <textarea
+              class="form-control"
+              name="formacoes_academicas"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Languages</label>
+            <input type="text" class="form-control" name="languages" />
+          </div>
+          <div class="form-group">
+            <label>Nationality</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nacionalidade"
+              value="brasileira"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Skills</label>
+            <textarea class="form-control" name="skills"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Employee Modal -->
+<div id="deleteEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Employee</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this employee?</p>
+        <p class="text-warning"><small>This action cannot be undone.</small></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

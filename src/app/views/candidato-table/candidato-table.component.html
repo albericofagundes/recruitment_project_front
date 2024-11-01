@@ -1,0 +1,57 @@
+<table mat-table [dataSource]="candidatos" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let candidato">{{ candidato.fullName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let candidato">{{ candidato.contato.email }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Endereço</th>
+    <td mat-cell *matCellDef="let candidato">
+      <ng-container *ngFor="let endereco of candidato.enderecos">
+        {{ endereco.rua }}, {{ endereco.cidade }}<br />
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef>Telefone</th>
+    <td mat-cell *matCellDef="let candidato">
+      {{ candidato.contato.telefone }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Ações</th>
+    <td mat-cell *matCellDef="let candidato">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="openModal('view', candidato)"
+      >
+        <mat-icon>visibility</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="openModal('edit', candidato)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="openModal('delete', candidato)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
